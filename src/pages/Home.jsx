@@ -61,7 +61,7 @@ const Styles = styled.div`
 }
 
 .hero_text{
-    padding-top: 100px;
+    padding-top: 50px;
     font-family: "Montserrat";
     color: white;
     text-align: center;

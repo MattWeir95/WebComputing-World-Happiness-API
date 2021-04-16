@@ -1,6 +1,7 @@
 import React from "react";
 import {Heading} from "../components/Heading";
 import styled from 'styled-components'
+import {FactorsTable} from "../components/FactorsTable";
 
 export default function Factors(){
 
@@ -10,7 +11,10 @@ export default function Factors(){
     if(loggedIn){
         return (
             <Styles>
-            <Heading heading="Factors" />
+                <Heading heading="Search" secondHeading="Factors"/>
+                
+            <FactorsTable />
+            
             </Styles>
         )
 
@@ -18,27 +22,56 @@ export default function Factors(){
         
         return (
             <Styles>
-            <Heading heading="To view this page you need to login" />
+            <Heading heading="Please Login" secondHeading="To View This Feature" />
             </Styles>
         )
     }
+
+    
     
 }
 
 
 const Styles = styled.div`
 
-.heading{
-    font-family: "Montserrat";
-    padding-top: 100px;
-    text-align: center;
-    font-weight: 600;
-}
+
 
 div > h1{
   
     font-size: 8rem;
     font-weight: 500;
-}`
+}
+
+div > p {
+    font-size: 4rem;
+    font-weight: 100;
+    text-align: center;
+    
+}
+
+
+#factors__grid{
+    width: 2000px;
+    height: 538px;
+    display: block;
+    
+    
+   
+    
+
+    
+}
+
+#inputForm{
+    display: flex;
+    justify-content: space-evenly;
+    
+
+}
+
+
+
+`
+
 
 

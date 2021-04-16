@@ -11,8 +11,8 @@ import Home from "./pages/Home";
 import Factors from "./pages/Factors";
 import Register from './pages/Register';
 import LoginPage from './pages/LoginPage';
-import Search from './pages/Search';
 import Rankings from './pages/Rankings';
+import SearchPage from "./pages/SearchPage.jsx";
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
             </Route>
 
             <Route exact path="/search">
-              <Search />
+              <SearchPage />
             </Route>
 
             <Route exact path="/rankings">

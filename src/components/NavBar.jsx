@@ -86,7 +86,8 @@ function LoggedInItems() {
   let token = localStorage.getItem("token");
   let loggedIn = token === "empty" ? false : true;
   let tokenDecoded = jwt.decode(token);
-  let tokenEmail = ""
+  let tokenEmail = "";
+ 
   if(tokenDecoded !== null){
     tokenEmail = tokenDecoded.email
   }
@@ -96,7 +97,7 @@ function LoggedInItems() {
     return (
 
       <Nav className="ml-auto" navbar>
-        <NavbarText id="email__text"> {tokenEmail} </NavbarText>
+        <NavbarText id="email__text"> Logged in as: {tokenEmail} </NavbarText>
         <NavItem>
           <NavLink onClick={Logout} >Logout</NavLink>
         </NavItem>

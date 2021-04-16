@@ -16,4 +16,13 @@ export function Heading(props) {
     )
 }
 
-const Styles = styled.div``
+const Styles = styled.div`
+
+.heading{
+    font-family: "Montserrat";
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+`

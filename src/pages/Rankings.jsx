@@ -20,7 +20,7 @@ export default function Rankings() {
         <Styles>
             <Heading heading="World Happiness Report" secondHeading="Rankings" />
             <div className="container">
-                <RankingsTable search=""/>
+                <RankingsTable />
             </div>
             <ScrollDown />
             
@@ -57,12 +57,7 @@ const Styles = styled.div`
     
 }
 
-.heading{
-    font-family: "Montserrat";
-    padding-top: 100px;
-    text-align: center;
-    font-weight: 600;
-}
+
 
 div > h1{
   
