@@ -1,21 +1,25 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Form, Input } from "reactstrap";
 
-//Styling Imports
+//Component Imports
 import { AgGridReact } from "ag-grid-react/lib/agGridReact";
+import { Form, Input } from "reactstrap";
 import styled from "styled-components";
+import { GetRankings } from "../api";
 
-export function RankingsTable() {
+//Returns the Rankings Table
+export function RankingsTable(props) {
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
 
+  //API call to get the row data.
   useEffect(() => {
-    fetch("http://131.181.190.87:3000/rankings")
+    GetRankings()
       .then((res) => res.json())
       .then((resJson) => setRowData(resJson));
-  });
+  }, []);
 
+  //Column headers for table
   const columns = [
     {
       headerName: "Rank",
@@ -49,18 +53,29 @@ export function RankingsTable() {
     gridApi.setQuickFilter(e.target.value);
   };
 
+  //Displays the search bar depending on what page youre on.
+  function DisplaySearchBar(props) {
+    if (props.search === "true") {
+      return (
+        <div className="searchBar">
+          <Form>
+            <Input
+              onChange={onFilterTextChange}
+              type="search"
+              id="search__bar"
+              placeholder="Enter Your Search"
+            />
+          </Form>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   return (
     <Styles>
-      <div className="searchBar">
-        <Form>
-          <Input
-            onChange={onFilterTextChange}
-            type="search"
-            id="search__bar"
-            placeholder="Enter Your Search"
-          />
-        </Form>
-      </div>
+      <DisplaySearchBar search={props.search} />
       <div
         id="rankings__grid"
         className="ag-theme-alpine ag-row-hover ag-column-hover"
@@ -71,12 +86,14 @@ export function RankingsTable() {
           rowData={rowData}
           pagination={true}
           paginationPageSize={10}
+          floatingFilter={true}
         />
       </div>
     </Styles>
   );
 }
 
+//CSS
 const Styles = styled.div`
   #search__bar {
     width: 820px;

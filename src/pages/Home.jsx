@@ -1,80 +1,72 @@
 import React from "react";
-import styled from 'styled-components'
-import {ScrollDown, ScrollUp} from "..//components/Scrolls";
 
+//Component Imports
+import styled from "styled-components";
 
-
-
-
+//Returns the content of the home page for the router.
 export default function Home() {
-    let token = localStorage.getItem("token");
-    console.log("homePageToken: " + token);
-
-    return (
-        <main>
-            <Hero />
-            <Info />
-        </main>
-    )
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 }
 
+//Text for the Hero, text from (https://en.wikipedia.org/wiki/World_Happiness_Report)
 const Hero = () => (
-
-    <Styles>
-    <div className ="hero">
-        <div className="hero_text">
-        World Happiness Report
-        </div>
-        
-        <ScrollDown />
-        
-        
-
-    </div>
-    </Styles>
-)
-
-const Info = () => (
-    <Styles>
+  <Styles>
+    <div className="hero">
+      <div className="hero_text">World Happiness Report</div>
+      <div className="transbox">
         <div className="info">
-        The World Happiness Report is a publication of the United Nations Sustainable 
-        Development Solutions Network. It contains articles and rankings of national happiness, 
-        based on respondent ratings of their own lives, which the report also correlates with
-        various (quality of) life factors.
+          <p>
+            The World Happiness Report is a publication of the United Nations
+            Sustainable Development Solutions Network. It contains articles and
+            rankings of national happiness, based on respondent ratings of their
+            own lives, which the report also correlates with various (quality
+            of) life factors.
+          </p>
         </div>
+      </div>
+    </div>
+  </Styles>
+);
 
-        <ScrollUp />
-        
-    </Styles>
-)
-
+//CSS
 const Styles = styled.div`
-
-
-
-.hero {
+  .hero {
     background-image: url("../images/happy.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 100vh;
-    
-}
+    height: calc(100vh - 56px);
+  }
 
-.hero_text{
+  .hero_text {
     padding-top: 50px;
     font-family: "Montserrat";
     color: white;
     text-align: center;
     font-size: 8rem;
     font-weight: 500;
-}
+  }
 
-.info {
+  .info {
     font-family: "Monserrat", sans-serif;
     text-align: center;
-    padding-bottom: 200px;
+    padding-bottom: 50px;
     padding-top: 50px;
     font-size: 3rem;
-}
+    color: White;
+  }
+  .transbox {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+  }
 
-`
+  .transbox p {
+    font-weight: bold;
+    color: #000000;
+  }
+`;

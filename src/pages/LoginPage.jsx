@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+
+//Component Imports
 import { Heading } from "../components/Heading";
 import styled from "styled-components";
-import { Button } from "reactstrap";
+import LoginForm from "../components/LoginForm";
 
-import { Alert, Form, Input, FormGroup } from "reactstrap";
-import { useState } from "react";
-
-const API_URL = "http://131.181.190.87:3000";
-
+//Returns the content of the Login page for the router.
 export default function LoginPage() {
-  let token = localStorage.getItem("token");
-  console.log("LoginPageToken: " + token);
   return (
     <Styles>
       <div>
@@ -21,99 +17,14 @@ export default function LoginPage() {
   );
 }
 
-function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [message, setMessage] = useState("");
-  const [alert, setAlert] = useState(null);
-
-  function Login() {
-    const url = `${API_URL}/user/login`;
-
-    return fetch(url, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    })
-      .then((res) => res.json())
-
-      .then((res) => {
-        if (!res.error) {
-          localStorage.setItem("token", res.token);
-          console.log(localStorage.getItem("token"));
-          window.location.href = "/";
-        } else {
-          setError(true);
-          setMessage(res.message);
-          setAlert(true);
-        }
-      });
-  }
-
-  return (
-    <Styles>
-      <div>
-        <FormGroup>
-          <Form>
-            <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              id="email"
-              type="email"
-              placeholder="Enter Email Address Here"
-            />
-          </Form>
-
-          <Form>
-            <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              type="password"
-              placeholder="Enter Password Here"
-            />
-          </Form>
-        </FormGroup>
-
-        <Button onClick={Login} size="lg">
-          Login
-        </Button>
-        <ErrorAlert />
-      </div>
-    </Styles>
-  );
-
-  function ErrorAlert() {
-    useEffect(() => {
-      setTimeout(() => {
-        setAlert(false);
-      }, 4000);
-    });
-
-    if (error) {
-      return (
-        <Styles>
-          <Alert id="error__alert" color="danger" isOpen={alert}>
-            {message}
-          </Alert>
-        </Styles>
-      );
-    }
-
-    return null;
-  }
-}
-
+//CSS
 const Styles = styled.div`
   .heading {
     font-family: "Montserrat";
     padding-top: 100px;
     text-align: center;
     font-weight: 600;
+    background-color: #f5f5f5;
   }
 
   div > h1 {
@@ -125,6 +36,7 @@ const Styles = styled.div`
     font-size: 4rem;
     font-weight: 100;
     text-align: center;
+    margin-bottom: 0px;
   }
 
   .btn {
@@ -164,5 +76,10 @@ const Styles = styled.div`
 
     margin-left: 40%;
     margin-right: 40%;
+  }
+
+  .login__page {
+    background-color: #f5f5f5;
+    height: calc(100vh - 57px);
   }
 `;
