@@ -13,10 +13,10 @@ export default function NavBar() {
       <div>
         <Navbar expand="md">
           <Nav className="mr-auto" navbar>
-            <NavItem>
+            <NavItem >
               <NavLink href="/">Home</NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem >
               <NavLink href="/rankings">Rankings</NavLink>
             </NavItem>
             <NavItem>
@@ -100,4 +100,6 @@ const Styles = styled.div`
     color: black;
     background-color: lightgrey;
   }
+
+ 
 `;

@@ -50,14 +50,7 @@ const Styles = styled.div`
     font-weight: 500;
   }
 
-  .info {
-    font-family: "Monserrat", sans-serif;
-    text-align: center;
-    padding-bottom: 50px;
-    padding-top: 50px;
-    font-size: 3rem;
-    color: White;
-  }
+ 
   .transbox {
     margin: 30px;
     background-color: #ffffff;
@@ -68,5 +61,13 @@ const Styles = styled.div`
   .transbox p {
     font-weight: bold;
     color: #000000;
+    font-family: "Montserrat";
+    padding-bottom: 50px;
+    padding-top: 50px;
+    font-size: 3rem;
+    text-align: center;
   }
 `;
+
+
+// Background image source: https://www.flickr.com/photos/douglucas/18855702682/in/photolist-uJdpu7-F6PNNm-FuNvdE-d85XtJ-KEULHW-315cN-zGECM-3D8XL6-eaXh2z-2aYJT5u-hxDBVp-s7Myjg-5igdho-PTpDNw-QLsR3Q-8mA2Zn-bUpqGv-qHbiuX-5bEkPC-6MjE8M-82N9pJ-CiAcXk-desXk6-KEULzQ-5J2zDE-cxrJLL-W76uSG-31LAFC-6e2fRC-9jc3DS-32XBfe-9akM8w-5TWQPd-7TeiL3-KAsoYP-ACeG-ApCKEe-4cZQ2q-DvCdd-JAstfu-ojstJu-fw2gGy-81QNsY-vFEv9f-5H8Nxq-QGEcnF-QGEcbD-3dhvG7-pztBQm-QLsR89
