@@ -1,39 +1,19 @@
 import React from "react";
-import "../App.css";
-// import { Link } from "react-router-dom";
-import styled from 'styled-components'
+
+//Component Imports
+import styled from "styled-components";
 import { Logout } from "./Logout";
 import jwt from "jsonwebtoken";
+import { Navbar, Nav, NavItem, NavLink, NavbarText } from "reactstrap";
 
-import {
-
-  Navbar,
-  Nav,
-  NavItem,
-  NavLink,
-  NavbarText
-} from 'reactstrap';
-
+//Returns a nav bar that changes depending on the user being logged in or not
 export default function NavBar() {
-
-
-
-
-
-
-
-
-
   return (
     <Styles>
-
-
       <div>
         <Navbar expand="md">
-
-
           <Nav className="mr-auto" navbar>
-            <NavItem >
+            <NavItem>
               <NavLink href="/">Home</NavLink>
             </NavItem>
             <NavItem>
@@ -47,20 +27,16 @@ export default function NavBar() {
             </NavItem>
           </Nav>
 
-
           <LoggedOutItems />
 
           <LoggedInItems />
-
-
-
-
         </Navbar>
       </div>
     </Styles>
   );
 }
 
+//Logged Out Nav Items
 function LoggedOutItems(props) {
   let token = localStorage.getItem("token");
   let loggedIn = token === "empty" ? false : true;
@@ -75,99 +51,53 @@ function LoggedOutItems(props) {
           <NavLink href="/register">Register</NavLink>
         </NavItem>
       </Nav>
-
-    )
+    );
   }
   return null;
 }
 
-
+//Logged in Nav Items
 function LoggedInItems() {
   let token = localStorage.getItem("token");
   let loggedIn = token === "empty" ? false : true;
   let tokenDecoded = jwt.decode(token);
   let tokenEmail = "";
- 
-  if(tokenDecoded !== null){
-    tokenEmail = tokenDecoded.email
+
+  if (tokenDecoded !== null) {
+    tokenEmail = tokenDecoded.email;
   }
-  
 
   if (loggedIn) {
     return (
-
       <Nav className="ml-auto" navbar>
         <NavbarText id="email__text"> Logged in as: {tokenEmail} </NavbarText>
         <NavItem>
-          <NavLink onClick={Logout} >Logout</NavLink>
+          <NavLink onClick={Logout}>Logout</NavLink>
         </NavItem>
       </Nav>
-    )
+    );
   }
   return null;
 }
 
-
-
+//CSS
 const Styles = styled.div`
+  #email__text {
+    padding-right: 20px;
+  }
+  .navbar {
+    background-color: lightslategrey;
+  }
 
+  a.nav-link {
+    color: white;
+    transition: 0.4s;
 
-#email__text{
-  padding-right: 20px;
-}
-.navbar {
-  background-color: lightslategrey;
-}
+    border-radius: 10px;
+  }
 
-a.nav-link {
-  color: white;
-  transition: 0.4s;
-  
-  border-radius: 10px;
-}
-
-a.nav-link:hover {
-  color: black;
-  background-color: lightgrey;
-  
-}
-
-`
-
-
-
-
-
-// <nav>
-//       <ul>
-
-//         <li>
-//           <Link to="/">Home</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/rankings">Rankings</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/search">Search</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/factors">Factors</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/register">Register</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/login">Login</Link>
-//         </li>
-
-//         <li>
-//           <Link to="/logout">Logout</Link>
-//         </li>
-
-//       </ul>
-//     </nav>
+  a.nav-link:hover {
+    color: black;
+    background-color: lightgrey;
+  }
+`;

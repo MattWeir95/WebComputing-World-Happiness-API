@@ -1,77 +1,72 @@
 import React from "react";
-import {Heading} from "../components/Heading";
-import styled from 'styled-components'
-import {FactorsTable} from "../components/FactorsTable";
 
-export default function Factors(){
+//Component Imports
+import { Heading } from "../components/Heading";
+import styled from "styled-components";
+import { FactorsTable } from "../components/FactorsTable";
 
-    let token = localStorage.getItem("token");
-    let loggedIn = token === "empty" ? false : true;
+//Returns the content of the Factors page for the router. (Changes depending if user is logged in)
+export default function Factors() {
+  let token = localStorage.getItem("token");
+  let loggedIn = token === "empty" ? false : true;
 
-    if(loggedIn){
-        return (
-            <Styles>
-                <Heading heading="Search" secondHeading="Factors"/>
-                
-            <FactorsTable />
-            
-            </Styles>
-        )
+  if (loggedIn) {
+    return (
+      <Styles>
+        <div className="factorsPage">
+          <Heading heading="Factors" />
 
-    }else {
-        
-        return (
-            <Styles>
-            <Heading heading="Please Login" secondHeading="To View This Feature" />
-            </Styles>
-        )
-    }
-
-    
-    
+          <FactorsTable />
+        </div>
+      </Styles>
+    );
+  } else {
+    return (
+      <Styles>
+        <div className="NotSuccessfactorsPage">
+          <Heading
+            heading="Please Login"
+            secondHeading="To View This Feature"
+          />
+        </div>
+      </Styles>
+    );
+  }
 }
 
 
+//CSS
 const Styles = styled.div`
+  .factors__page,
+  .heading {
+    background-color: #f5f5f5;
+  }
 
+  .NotSuccessfactorsPage {
+    height: calc(100vh - 57px);
+    background-color: #f5f5f5;
+  }
 
-
-div > h1{
-  
+  div > h1 {
     font-size: 8rem;
     font-weight: 500;
-}
+    margin-bottom: 0px;
+  }
 
-div > p {
+  div > p {
     font-size: 4rem;
     font-weight: 100;
     text-align: center;
-    
-}
+    margin-bottom: 0px;
+  }
 
+  #factors__grid {
+    max-width: 1832px;
+    height: 584px;
+  }
 
-#factors__grid{
-    width: 2000px;
-    height: 538px;
-    display: block;
-    
-    
-   
-    
-
-    
-}
-
-#inputForm{
+  #inputForm {
     display: flex;
     justify-content: space-evenly;
-    
-
-}
-
-
-
-`
-
-
-
+  }
+`;
