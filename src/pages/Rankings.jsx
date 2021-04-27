@@ -42,6 +42,8 @@ const Styles = styled.div`
     font-size: 30px;
     font-weight: bold;
     color: #000000;
+    font-family: "Montserrat";
+    text-align: center;
   }
 
   .rankings__page,
