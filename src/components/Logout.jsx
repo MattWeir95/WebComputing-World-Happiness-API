@@ -2,7 +2,7 @@
 //Returns them to the homepage
 export function Logout() {
   if (localStorage.getItem("token") !== "empty") {
-    localStorage.setItem("token", "empty");
+    localStorage.removeItem("token");
     window.location.href = "/";
   }
 }

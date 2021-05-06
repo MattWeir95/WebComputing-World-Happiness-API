@@ -39,7 +39,7 @@ export default function NavBar() {
 //Logged Out Nav Items
 function LoggedOutItems(props) {
   let token = localStorage.getItem("token");
-  let loggedIn = token === "empty" ? false : true;
+  let loggedIn = token === null ? false : true;
 
   if (!loggedIn) {
     return (
@@ -59,7 +59,7 @@ function LoggedOutItems(props) {
 //Logged in Nav Items
 function LoggedInItems() {
   let token = localStorage.getItem("token");
-  let loggedIn = token === "empty" ? false : true;
+  let loggedIn = token === null ? false : true;
   let tokenDecoded = jwt.decode(token);
   let tokenEmail = "";
 
