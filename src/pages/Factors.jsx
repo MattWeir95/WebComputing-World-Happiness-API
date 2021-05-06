@@ -8,7 +8,7 @@ import { FactorsTable } from "../components/FactorsTable";
 //Returns the content of the Factors page for the router. (Changes depending if user is logged in)
 export default function Factors() {
   let token = localStorage.getItem("token");
-  let loggedIn = token === "empty" ? false : true;
+  let loggedIn = token === null ? false : true;
 
   if (loggedIn) {
     return (
