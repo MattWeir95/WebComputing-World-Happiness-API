@@ -28,7 +28,7 @@ export function FactorsTable(value) {
   const [economy, setEconomy] = useState([]);
   const [family, setFamily] = useState([]);
   const [health, setHealth] = useState([]);
-
+  const [error, setError] = useState(false);
   //Updates the rowData with an API call based on user input
   useEffect(() => {
     let newUrl = "";
@@ -46,14 +46,22 @@ export function FactorsTable(value) {
         countryInput;
     }
 
+    
     GetFactors(newUrl)
-      .then((res) => res.json())
-
-      .then((resJson) => {
-        if (!resJson.error) {
-          setRowData(resJson);
-        }
-      });
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        setError(true)
+      }
+    })
+    .then((resJson) => {
+      setRowData(resJson)
+    })
+    .catch((error) => {
+      setError(true);
+      console.log(error);
+    });
   }, [countryInput, limitInput, yearInput]);
 
   //Updates the countries list for the autosuggest
@@ -92,144 +100,150 @@ export function FactorsTable(value) {
       return <p>See Graphs Below</p>;
     }
   }
-
-  return (
-    <Styles>
-      <div className="factors__page">
-        <div className="container">
-          <Form id="inputForm">
-            <FormGroup>
-              <Label id="year__label" for="yearSelect">
-                Select Year
-              </Label>
-
-              <Input
-                value={yearInput}
-                onChange={(e) => {
-                  setYearInput(e.target.value);
-                }}
-                type="select"
-                name="select"
-                id="yearSelect"
-              >
-                <option>2020</option>
-                <option>2019</option>
-                <option>2018</option>
-                <option>2017</option>
-                <option>2016</option>
-                <option>2015</option>
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label id="limit__label" for="limitSelect">
-                Number of Results
-              </Label>
-
-              <Input
-                value={limitInput}
-                onChange={(e) => {
-                  setLimitInput(e.target.value);
-                }}
-                type="select"
-                name="select"
-                id="limitSelect"
-              >
-                <option>10</option>
-                <option>20</option>
-                <option>50</option>
-                <option>100</option>
-                <option>150</option>
-                <option>200</option>
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label id="country__label" for="search__bar">
-                Search Country
-              </Label>
-
-              <Autosuggest
-                inputProps={{
-                  placeholder: "Type Country",
-                  name: "country",
-                  id: "country",
-                  value: countryInput,
-
-                  onChange: (_event, { newValue }) => {
-                    setCountryInput(newValue);
-                  },
-                }}
-                suggestions={suggestions.slice(0, 10)}
-                onSuggestionsFetchRequested={async (value) => {
-                  if (!value) {
+  if(!error){
+    return (
+      <Styles>
+        <div className="factors__page">
+          <div className="container">
+            <Form id="inputForm">
+              <FormGroup>
+                <Label id="year__label" for="yearSelect">
+                  Select Year
+                </Label>
+  
+                <Input
+                  value={yearInput}
+                  onChange={(e) => {
+                    setYearInput(e.target.value);
+                  }}
+                  type="select"
+                  name="select"
+                  id="yearSelect"
+                >
+                  <option>2020</option>
+                  <option>2019</option>
+                  <option>2018</option>
+                  <option>2017</option>
+                  <option>2016</option>
+                  <option>2015</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label id="limit__label" for="limitSelect">
+                  Number of Results
+                </Label>
+  
+                <Input
+                  value={limitInput}
+                  onChange={(e) => {
+                    setLimitInput(e.target.value);
+                  }}
+                  type="select"
+                  name="select"
+                  id="limitSelect"
+                >
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                  <option>100</option>
+                  <option>150</option>
+                  <option>200</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label id="country__label" for="search__bar">
+                  Search Country
+                </Label>
+  
+                <Autosuggest
+                  inputProps={{
+                    placeholder: "Type Country",
+                    name: "country",
+                    id: "country",
+                    value: countryInput,
+  
+                    onChange: (_event, { newValue }) => {
+                      setCountryInput(newValue);
+                    },
+                  }}
+                  suggestions={suggestions.slice(0, 10)}
+                  onSuggestionsFetchRequested={async (value) => {
+                    if (!value) {
+                      setSugguestions([]);
+                      return;
+                    } else {
+                      const result = countries.filter(
+                        (country) =>
+                          country
+                            .toLowerCase()
+                            .indexOf(countryInput.toLowerCase()) > -1
+                      );
+  
+                      setSugguestions(result);
+                    }
+                  }}
+                  onSuggestionsClearRequested={() => {
                     setSugguestions([]);
-                    return;
-                  } else {
-                    const result = countries.filter(
-                      (country) =>
-                        country
-                          .toLowerCase()
-                          .indexOf(countryInput.toLowerCase()) > -1
-                    );
-
-                    setSugguestions(result);
-                  }
-                }}
-                onSuggestionsClearRequested={() => {
-                  setSugguestions([]);
-                }}
-                getSuggestionValue={(suggestion) => suggestion}
-                renderSuggestion={(suggestion) => <span>{suggestion} </span>}
+                  }}
+                  getSuggestionValue={(suggestion) => suggestion}
+                  renderSuggestion={(suggestion) => <span>{suggestion} </span>}
+                />
+              </FormGroup>
+            </Form>
+          </div>
+          <div className="wrapper">
+            <div
+              id="factors__grid"
+              className="ag-theme-alpine ag-row-hover ag-column-hover container"
+            >
+              <AgGridReact
+                columnDefs={columns}
+                rowData={rowData}
+                pagination={true}
+                paginationPageSize={10}
+                floatingFilter={true}
               />
-            </FormGroup>
-          </Form>
-        </div>
-        <div className="wrapper">
-          <div
-            id="factors__grid"
-            className="ag-theme-alpine ag-row-hover ag-column-hover container"
-          >
-            <AgGridReact
-              columnDefs={columns}
-              rowData={rowData}
-              pagination={true}
-              paginationPageSize={10}
-              floatingFilter={true}
+            </div>
+          </div>
+          <ScrollDown />
+          <GraphHeader />
+          <div className="graphs">
+            <BarGraph
+              title={yearInput + " Scores"}
+              countries={countriesForGraph}
+              data={score}
+              label="Score"
+            />
+            <BarGraph
+              title={yearInput + " Economy"}
+              countries={countriesForGraph}
+              data={economy}
+              label="Economy"
+            />
+            <BarGraph
+              title={yearInput + " Family"}
+              countries={countriesForGraph}
+              data={family}
+              label="Family"
+            />
+            <BarGraph
+              title={yearInput + " Health"}
+              countries={countriesForGraph}
+              data={health}
+              label="Health"
             />
           </div>
+  
+          <ScrollUp />
         </div>
-        <ScrollDown />
-        <GraphHeader />
-        <div className="graphs">
-          <BarGraph
-            title={yearInput + " Scores"}
-            countries={countriesForGraph}
-            data={score}
-            label="Score"
-          />
-          <BarGraph
-            title={yearInput + " Economy"}
-            countries={countriesForGraph}
-            data={economy}
-            label="Economy"
-          />
-          <BarGraph
-            title={yearInput + " Family"}
-            countries={countriesForGraph}
-            data={family}
-            label="Family"
-          />
-          <BarGraph
-            title={yearInput + " Health"}
-            countries={countriesForGraph}
-            data={health}
-            label="Health"
-          />
-        </div>
-
-        <ScrollUp />
-      </div>
-    </Styles>
-  );
+      </Styles>
+    );
+  }else{
+    return(
+      <p>There was an error connecting....Please check internet connection.</p>
+    )
+  }
+  
 }
 
 //Columns for the table

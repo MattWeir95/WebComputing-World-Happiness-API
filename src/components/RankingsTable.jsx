@@ -11,12 +11,31 @@ import { GetRankings } from "../api";
 export function RankingsTable(props) {
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
-
+  const [error, setError] = useState(null);
   //API call to get the row data.
   useEffect(() => {
-    GetRankings()
-      .then((res) => res.json())
-      .then((resJson) => setRowData(resJson));
+      
+        // fetch("http://131.181.190.87:3000/rankings")
+        // .then((res) => res.json())
+        // .then((resJson) => setRowData(resJson));
+
+        GetRankings()
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            setError(true)
+          }
+        })
+        .then((resJson) => {
+          setRowData(resJson)
+        })
+        .catch((error) => {
+          setError(true);
+          console.log(error);
+        });
+      
+   
   }, []);
 
   //Column headers for table
@@ -72,25 +91,32 @@ export function RankingsTable(props) {
       return null;
     }
   }
-
-  return (
-    <Styles>
-      <DisplaySearchBar search={props.search} />
-      <div
-        id="rankings__grid"
-        className="ag-theme-alpine ag-row-hover ag-column-hover"
-      >
-        <AgGridReact
-          onGridReady={onGridReady}
-          columnDefs={columns}
-          rowData={rowData}
-          pagination={true}
-          paginationPageSize={10}
-          floatingFilter={true}
-        />
-      </div>
-    </Styles>
-  );
+  if(!error){
+    return (
+      <Styles>
+        <DisplaySearchBar search={props.search} />
+        <div
+          id="rankings__grid"
+          className="ag-theme-alpine ag-row-hover ag-column-hover"
+        >
+          <AgGridReact
+            onGridReady={onGridReady}
+            columnDefs={columns}
+            rowData={rowData}
+            pagination={true}
+            paginationPageSize={10}
+            floatingFilter={true}
+          />
+        </div>
+      </Styles>
+    );
+  }
+  else{
+    return(
+      <p>There was an error connecting....Please check internet connection.</p>
+    )
+  }
+  
 }
 
 //CSS
